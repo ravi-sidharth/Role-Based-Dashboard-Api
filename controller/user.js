@@ -17,11 +17,9 @@ const userSignUp = async (req, res) => {
 
         // salt password
         const salt = await bcrypt.genSalt(10)
-        console.log("salt", salt)
 
         // hash password 
         const hashPassword = await bcrypt.hash(password, salt)
-        console.log("hashPassword", hashPassword)
 
         const newUser = new User({
             name,
