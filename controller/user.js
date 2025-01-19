@@ -1,5 +1,6 @@
 const { User } = require("../model/user")
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken')
 
 const userSignUp = async (req, res) => {
     try {
@@ -29,7 +30,7 @@ const userSignUp = async (req, res) => {
         })
         await newUser.save()
 
-        return res.status(201).json({
+        res.status(201).json({
             success: true,
             data: newUser
         })
@@ -38,7 +39,7 @@ const userSignUp = async (req, res) => {
         console.log(err)
         res.status(500).json({
             success: false,
-            message: err.message
+            message: "Something went wrong!"
         })
     }
 }
@@ -49,23 +50,34 @@ const userLogIn = async (req, res) => {
 
         const user = await User.findOne({ email })
         if (!user) {
-            return res.status(404).json({
+            return res.status(401).json({
                 status: false,
                 message: "User not exists!"
             })
         }
 
-        checkedPassword = await bcrypt.compare(password, user.password)
+        const checkedPassword = await bcrypt.compare(password, user.password)
         if (!checkedPassword) {
             return res.status(401).json({
                 success:false,
                 message:"Invalid Credential!"
             })
         }
+        
+        // generate jwt signin token 
+        const payload = {
+            _id :user._id,
+            name:user.name,
+            email:user.email,
+            password:user.password,
+            role:user.role
+        }
+        const token = jwt.sign(payload,process.env.secret)
 
-        return res.status(200).json({
+        res.status(200).json({
             success:true,
-            message:"User Logged in successfully"
+            message:"User Logged in successfully",
+            token
         })
         
 
@@ -73,7 +85,7 @@ const userLogIn = async (req, res) => {
         console.log(err)
         return res.status(500).json({
             success: false,
-            message: err
+            message:"Something went wrong!"
         })
     }
 }
