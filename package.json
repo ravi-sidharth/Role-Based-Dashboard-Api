@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "build":"npm i",
+    "build": "npm i",
     "start": "node app.js",
     "dev": "nodemon app.js"
   },
@@ -17,6 +17,7 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.12.0",
     "mongoose": "^8.9.5"
   },
   "devDependencies": {

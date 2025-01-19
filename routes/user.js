@@ -6,4 +6,4 @@ const route = Router()
 route.post('/signup',userSignUp)
 route.post('/login',userLogIn)
 
-module.exports = route
+module.exports = route 
