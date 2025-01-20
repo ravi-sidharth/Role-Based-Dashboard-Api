@@ -19,7 +19,7 @@ const adminAuth = async (req,res,next) => {
         console.log(err)
         return res.status(500).json({
             success:false,
-            message:"Something went wrong, Please login again to continue!"
+            message:"Some error occured!, Please login again to continue."
         })
     }
 

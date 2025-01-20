@@ -10,17 +10,17 @@ const userSignUp = async (req, res) => {
         if (userExist) {
             return res.status(400).json({
                 success: false,
-                message: "This email already exist, Please try again with another email!"
+                message: "User already exist, Please try again with another email!"
 
             })
         }
 
-        // salt password
-        const salt = await bcrypt.genSalt(10)
-
+        
         // hash password 
+        const salt = await bcrypt.genSalt(10)
         const hashPassword = await bcrypt.hash(password, salt)
 
+        //create a new user and save in database
         const newUser = new User({
             name,
             email,
@@ -28,16 +28,23 @@ const userSignUp = async (req, res) => {
         })
         await newUser.save()
 
-        res.status(201).json({
-            success: true,
-            data: newUser
-        })
+        if(newUser) {
+            res.status(201).json({
+                success: true,
+                message: "User registered successfully!",
+            })
+        } else {
+            res.status(400).json({
+                success: false,
+                message: "Unable to register user! please try again.", 
+            })
+        }
 
     } catch (err) {
         console.log(err)
         res.status(500).json({
             success: false,
-            message: "Something went wrong!"
+            message: "Something error occured!, Please try again."
         })
     }
 }
@@ -50,7 +57,7 @@ const userLogIn = async (req, res) => {
         if (!user) {
             return res.status(401).json({
                 status: false,
-                message: "User not exists!"
+                message: "User doesn't exists!"
             })
         }
 
@@ -58,11 +65,11 @@ const userLogIn = async (req, res) => {
         if (!checkedPassword) {
             return res.status(401).json({
                 success:false,
-                message:"Invalid Credential!"
+                message:"Invalid Credentiasl!"
             })
         }
         
-        // generate jwt signin token 
+        // generate jwt user token 
         const payload = {
             _id :user._id,
             name:user.name,
@@ -83,7 +90,7 @@ const userLogIn = async (req, res) => {
         console.log(err)
         return res.status(500).json({
             success: false,
-            message:"Something went wrong!"
+            message:"Some error occured! Please try again."
         })
     }
 }
