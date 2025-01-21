@@ -20,7 +20,7 @@ const getUserTasks = async(req,res)=>{
 
 const getAllUsersTasks = async(req,res)=>{
     try {
-        const tasks = await Task.find({})
+        const tasks = await Task.find({}).populate("createdBy")
         res.status(200).json({
             success:true,
             message:"Successfully fetch all users tasks!",
@@ -33,7 +33,6 @@ const getAllUsersTasks = async(req,res)=>{
         })
     }
 }
-
 
 module.exports = {
     getUserTasks,

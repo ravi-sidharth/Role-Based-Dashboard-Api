@@ -12,7 +12,6 @@ const userAuth = async (req,res,next) => {
             })
         }
         const decodedTokenInfo = jwt.verify(token,process.env.secret)
-
         req.user = decodedTokenInfo 
         next()
 
