@@ -57,9 +57,8 @@ const getUserTasks = async(req,res)=>{
             }
         ];
         
-        // await Task.insertMany(tasksWithDescriptions)
-        const tasks = await Task.find({createdBy:req.user._id}).populate("createdBy")
-        console.log(tasks.length,"length")
+        await Task.insertMany(tasksWithDescriptions)
+        const tasks = await Task.find({createdBy:req.user._id}).populate("createdBy").limit(10)
         res.status(200).json({
             success:true,
             message:"Successfully fetched all tasks!",

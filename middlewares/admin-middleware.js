@@ -1,10 +1,11 @@
 const adminAuth = async (req,res,next) => {
     try{
         if (req.user.role=="admin") {
-            res.status(200).json({
-                success:true,
-                message:"Welcome to the admin Page!"
-            })
+            // res.status(200).json({
+            //     success:true,
+            //     // message:"Welcome to the admin Page!"
+            // })
+            next()
         }
         else {
             return res.status(403).json({
@@ -13,8 +14,8 @@ const adminAuth = async (req,res,next) => {
             })
         }
         
-        next()
-
+       
+        
     } catch(err) {
         console.log(err)
         return res.status(500).json({
