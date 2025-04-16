@@ -9,7 +9,7 @@ const app = express()
 const PORT = process.env.PORT || 3000
 
 // Connect Database
-connectToMongoDB().then(()=>console.log("Database Connected Successfully!"))
+connectToMongoDB()
 
 // middleware 
 app.use(express.json())

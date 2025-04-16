@@ -1,7 +1,12 @@
 const mongoose = require('mongoose')
 
 async function connectToMongoDB() {
-    return mongoose.connect(process.env.mongoUrl)
+    try {
+        mongoose.connect(process.env.mongoUrl)
+        console.log('Database Connected Successfully!')
+    } catch(err) {
+        console.error(err)
+    }
 }
 
 module.exports = connectToMongoDB

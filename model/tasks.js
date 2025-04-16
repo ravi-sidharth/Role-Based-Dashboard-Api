@@ -11,7 +11,8 @@ const UserTask = new Schema ({
     },
     createdBy: {
         type:Schema.Types.ObjectId,
-        ref:"user"
+        ref:"user",
+        required:true
     }
 })
 

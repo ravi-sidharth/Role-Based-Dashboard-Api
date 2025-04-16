@@ -14,8 +14,6 @@ const adminAuth = async (req,res,next) => {
             })
         }
         
-       
-        
     } catch(err) {
         console.log(err)
         return res.status(500).json({
@@ -23,7 +21,6 @@ const adminAuth = async (req,res,next) => {
             message:"Some error occured!, Please login again to continue."
         })
     }
-
 }
 
 module.exports = adminAuth

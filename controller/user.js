@@ -15,7 +15,6 @@ const userSignUp = async (req, res) => {
             })
         }
 
-        
         // hash password 
         const salt = await bcrypt.genSalt(10)
         const hashPassword = await bcrypt.hash(password, salt)
@@ -28,7 +27,7 @@ const userSignUp = async (req, res) => {
         })
         await newUser.save()
 
-        if(newUser) {
+        if (newUser) {
             res.status(201).json({
                 success: true,
                 message: "User registered successfully!",
@@ -36,15 +35,14 @@ const userSignUp = async (req, res) => {
         } else {
             res.status(400).json({
                 success: false,
-                message: "Unable to register user! please try again.", 
+                message: "Unable to register user! please try again.",
             })
         }
 
     } catch (err) {
-        console.log(err)
-        res.status(500).json({
+        return res.status(500).json({
             success: false,
-            message: "Some error occured!, Please try again."
+            message: err.message
         })
     }
 }
@@ -64,33 +62,31 @@ const userLogIn = async (req, res) => {
         const checkedPassword = await bcrypt.compare(password, user.password)
         if (!checkedPassword) {
             return res.status(401).json({
-                success:false,
-                message:"Invalid Credentiasl!"
+                success: false,
+                message: "Invalid Credentiasl!"
             })
         }
-        
+
         // generate jwt user token 
         const payload = {
-            _id :user._id,
-            name:user.name,
-            email:user.email,
-            password:user.password,
-            role:user.role
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            role: user.role
         }
-        const token = jwt.sign(payload,process.env.secret)
+        const token = jwt.sign(payload, process.env.secret)
 
         res.status(200).json({
-            success:true,
-            message:"User Logged in successfully",
+            success: true,
+            message: "User Logged in successfully",
             token
         })
-        
+
 
     } catch (err) {
-        console.log(err)
         return res.status(500).json({
             success: false,
-            message:"Some error occured! Please try again."
+            message: err.message
         })
     }
 }
