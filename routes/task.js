@@ -9,6 +9,6 @@ route.post('/create-task',userAuth,taskCreatedByUser)
 route.get('/get-task',userAuth,getTasksByUserId)
 route.put('/update-task',userAuth,taskUpdatedByUserId)
 route.delete('/delete-task',userAuth,taskDeletedByUserId)
-route.get('/admin/tasks',adminAuth, getAllUsersTasks)
+route.get('/admin/tasks',userAuth,adminAuth, getAllUsersTasks)
 
 module.exports = route

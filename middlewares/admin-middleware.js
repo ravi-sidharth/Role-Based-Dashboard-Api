@@ -6,7 +6,7 @@ const adminAuth = async (req,res,next) => {
             //     // message:"Welcome to the admin Page!"
             // })
             next()
-        }
+        }   
         else {
             return res.status(403).json({
                 success:false,
