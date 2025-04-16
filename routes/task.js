@@ -1,14 +1,14 @@
 const {Router} = require('express')
-const userAuth = require('../middlewares/user-middleware')
-const adminAuth = require('../middlewares/admin-middleware')
+const validation = require('../middlewares/validation-middleware')
+const {userAuth,adminAuth} = require('../middlewares/auth-middleware')
 const {taskCreatedByUser,taskUpdatedByUserId,taskDeletedByUserId,getTasksByUserId, getAllUsersTasks } = require('../controller/task')
 
 const route = Router()
 
-route.post('/create-task',userAuth,taskCreatedByUser)
-route.get('/get-task',userAuth,getTasksByUserId)
-route.put('/update-task',userAuth,taskUpdatedByUserId)
-route.delete('/delete-task',userAuth,taskDeletedByUserId)
-route.get('/admin/tasks',userAuth,adminAuth, getAllUsersTasks)
+route.post('/create-task',validation,userAuth,taskCreatedByUser)
+route.get('/get-task',validation,userAuth,getTasksByUserId)
+route.put('/update-task',validation,userAuth,taskUpdatedByUserId)
+route.delete('/delete-task',validation,userAuth,taskDeletedByUserId)
+route.get('/admin/tasks',validation,adminAuth, getAllUsersTasks)
 
 module.exports = route
